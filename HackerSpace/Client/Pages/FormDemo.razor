@@ -1,6 +1,38 @@
 ﻿@page "/formdemo"
 <h3>Form Demo</h3>
 
-@code {
+<p>Text: <InputText @bind-Value="text"/></p>
+<p>Checkbox: <InputCheckbox @bind-Value="isSet"/></p>
+<p>
+    <InputRadioGroup Name="myRadioGroup" @bind-Value="radioGroupSelection">
+        <p> Option1: <InputRadio Name="myRadioGroup" Value="option1" /></p>
+        <p> Option2: <InputRadio Name="myRadioGroup" Value="option2" /></p>
+        <p> Option3: <InputRadio Name="myRadioGroup" Value="option3" /></p>
+    </InputRadioGroup>    
+</p>
 
+<p>
+    <InputSelect @bind-Value="dropDownSelection">
+        <option value="1">Option 1</option>
+        <option value="2">Option 2</option>
+        <option value="3">Option 3</option>
+    </InputSelect>
+</p>
+
+<p>
+    <InputDate @bind-Value="dateTime"></InputDate>
+</p>
+
+<p><InputTextArea @bind-Value="textArea"/></p> 
+
+@code {
+    private string text;
+    private bool isSet;
+    private string radioGroupSelection;
+    private bool option1;
+    private bool option2;
+    private bool option3;
+    private string textArea;
+    private string dropDownSelection;
+    private DateTime dateTime;
 }
