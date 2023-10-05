@@ -1,4 +1,4 @@
-using HackerSpace.Shared;
+using HackerSpace.Shared.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HackerSpace.Server.Controllers
