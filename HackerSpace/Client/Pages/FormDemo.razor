@@ -1,18 +1,20 @@
 ﻿@page "/formdemo"
+@using HackerSpace.Shared.Models;
+
 <h3>Form Demo</h3>
 
-<p>Text: <InputText @bind-Value="text"/></p>
-<p>Checkbox: <InputCheckbox @bind-Value="isSet"/></p>
+<p>Text: <InputText @bind-Value="formData.Text"/></p>
+<p>Checkbox: <InputCheckbox @bind-Value="formData.IsSet"/></p>
 <p>
-    <InputRadioGroup Name="myRadioGroup" @bind-Value="radioGroupSelection">
-        <p> Option1: <InputRadio Name="myRadioGroup" Value="option1" /></p>
-        <p> Option2: <InputRadio Name="myRadioGroup" Value="option2" /></p>
-        <p> Option3: <InputRadio Name="myRadioGroup" Value="option3" /></p>
+    <InputRadioGroup Name="myRadioGroup" @bind-Value="formData.RadioGroupSelection">
+        <p> Option1: <InputRadio Name="myRadioGroup" TValue="String" /></p>
+        <p> Option2: <InputRadio Name="myRadioGroup" TValue="String" /></p>
+        <p> Option3: <InputRadio Name="myRadioGroup" TValue="String" /></p>
     </InputRadioGroup>    
 </p>
 
 <p>
-    <InputSelect @bind-Value="dropDownSelection">
+    <InputSelect @bind-Value="formData.DropDownSelection">
         <option value="1">Option 1</option>
         <option value="2">Option 2</option>
         <option value="3">Option 3</option>
@@ -20,10 +22,25 @@
 </p>
 
 <p>
-    <InputDate @bind-Value="dateTime"></InputDate>
+    <InputDate @bind-Value="formData.DateTimeSelected"></InputDate>
 </p>
 
-<p><InputTextArea @bind-Value="textArea"/></p> 
+<p><InputTextArea @bind-Value="formData.TextArea"/></p> 
 
+<p>
+    <button @onclick="Submit">Submit</button>
+</p>
+<p>
+    @results
+</p>
 @code {
+    private FormData formData = new FormData();
+
+    private string results;
+    private void Submit()
+    {
+        results = $"Clicked! {DateTime.Now.ToString("s")}\n"
+        +formData.ToString();
+    }
+
 }

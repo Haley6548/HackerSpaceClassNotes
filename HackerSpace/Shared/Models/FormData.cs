@@ -17,5 +17,12 @@ namespace HackerSpace.Shared.Models
         public string TextArea { get; set; }
         public string DropDownSelection { get; set; }
         public DateTime DateTimeSelected { get; set; }
+
+        public override string ToString()
+        {
+            return $"Text: {TextArea}\n"
+            + $"Is Set: {IsSet}\n"
+            + $"TextArea: {TextArea}\n";
+        }
     }
 }
