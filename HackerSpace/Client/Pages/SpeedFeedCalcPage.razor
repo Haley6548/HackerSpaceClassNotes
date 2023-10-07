@@ -1,0 +1,39 @@
+﻿@page "/speedfeedcalc"
+
+<h3>SpeedAndFeedCalcPage</h3>
+
+<p>
+    <lable for="chipload">Chip Load</lable>
+    <InputNumber @bind-Value="calculator.ChipLoad" />
+</p>
+<p>
+    <lable for="rpm">RPM</lable>
+    <InputNumber @bind-Value="calculator.RPM" />
+</p>
+<p>
+    <lable for="flutes">Flutes</lable>
+    <InputNumber @bind-Value="calculator.Flutes" />
+</p>
+<p>
+    <button @onclick="OnClick">Submit</button>
+</p>
+<p>
+    @result
+</p>
+
+
+
+@code {
+    private SpeedFeedCalc calculator;
+    private string result;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        calculator = new SpeedFeedCalc();
+    }
+    public void OnClick()
+    {
+        result = calculator.FeedRate.ToString();
+    }
+}
