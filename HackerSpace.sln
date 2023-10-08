@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HackerSpace.Client", "Hacke
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HackerSpace.Shared", "HackerSpace\Shared\HackerSpace.Shared.csproj", "{F457DCAF-C688-4A19-A204-A2B146E4B930}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hackerspace.Shared.Tests", "Hackerspace.Shared.Tests\Hackerspace.Shared.Tests.csproj", "{D2F12C11-18AB-4666-B9A5-D24858FFAC4E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hackerspace.Shared.Tests", "Hackerspace.Shared.Tests\Hackerspace.Shared.Tests.csproj", "{D2F12C11-18AB-4666-B9A5-D24858FFAC4E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

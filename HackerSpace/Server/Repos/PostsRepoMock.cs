@@ -36,5 +36,9 @@ namespace HackerSpace.Server.Repos
 		{
 			return posts; 
 		}
+		public void InsertPost(Post post)
+		{
+			posts.Add(post);
+		}
 	}
 }

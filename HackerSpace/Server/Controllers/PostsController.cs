@@ -14,10 +14,17 @@ namespace HackerSpace.Server.Controllers
 		{
 			postsRepo = new PostsRepoMock();
 		}
+
 		[HttpGet]
 		public List<Post> GetAllPosts()
 		{
 			return postsRepo.GetAll();
 		}
+
+		[HttpPost]
+		public void InsertPost(Post post) 
+		{
+            postsRepo.InsertPost(post);
+        }
 	}
 }
