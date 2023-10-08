@@ -1,4 +1,4 @@
-﻿@page "/post"
+﻿@page "/post/html"
 @inject HttpClient http
 @inject NavigationManager NavManager
 
@@ -28,6 +28,8 @@
     protected void OnSubmitClicked()
     {
         http.PostAsJsonAsync<Post>("api/Post",post);
+
+        NavManager.NavigateTo("blog");
     }
 }
 
