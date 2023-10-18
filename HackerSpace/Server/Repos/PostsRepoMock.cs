@@ -17,14 +17,12 @@ namespace HackerSpace.Server.Repos
                     Text = $"Test {i}",
                     Date = DateTime.Now,
                 });
-            }
-            
-			
+            }       
 		}
 
 		public IEnumerable<Post> GetPosts(int page, int pageSize) 
 		{
-			return posts.OrderByDescending(p=>p.Date).Skip((page-1)*pageSize).Take(pageSize); 
+			return posts.OrderByDescending(p => p.Date).Skip((page-1)*pageSize).Take(pageSize); 
 		}
 		public Post? GetPost(int id)
 		{
@@ -33,6 +31,15 @@ namespace HackerSpace.Server.Repos
 		public void InsertPost(Post post)
 		{
 			posts.Add(post);
+		}
+
+		public void DeletePost(int id)
+		{
+			Post? post_to_remove = posts.Where(p => p.Id == id).FirstOrDefault();
+			if (post_to_remove!=null)
+			{
+				posts.Remove(post_to_remove);
+			}
 		}
 	}
 }

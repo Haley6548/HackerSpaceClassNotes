@@ -11,12 +11,15 @@ else
 {
     @foreach(var post in posts)
     {
-        <p>@post.Date.ToString("D") 
+        <p>@post.Date.ToString("D")
             <a href="post/@post.Id">@post.Title</a>
+            <button type="button" class="btn btn-danger"
+            @onclick="() => OnDeleteClickAsync(post.Id)">
+                Delete Post
+            </button>
         </p>
     }
 <button type="button" class="btn btn-primary" @onclick="OnAddPostClick" >Add Post</button>
-
 <p>
     <button type="button" class="btn btn-primary" @onclick="OnPreviousClickAsync">Previous Page</button>
     <button type="button" class="btn btn-primary" @onclick="OnNextClick">Next Page</button>
@@ -37,6 +40,11 @@ else
     {
         //Navigate to a detail page
         NavManager.NavigateTo("post");
+    }
+    protected async Task OnDeleteClickAsync(int id)
+    {
+        var results = await http.DeleteAsync($"api/Posts/{id}");
+        NavManager.NavigateTo($"/blog", true);// force reload
     }
 
     protected async Task OnPreviousClickAsync()
