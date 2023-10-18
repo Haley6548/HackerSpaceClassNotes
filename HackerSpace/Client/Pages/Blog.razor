@@ -15,22 +15,37 @@ else
             <a href="post/@post.Id">@post.Title</a>
         </p>
     }
-    <button type="button" class="btn btn-primary" @onclick="OnAddPostClick" >Add Post</button>
+<button type="button" class="btn btn-primary" @onclick="OnAddPostClick" >Add Post</button>
+
+<p>
+    <button type="button" class="btn btn-primary" @onclick="OnPreviousClickAsync">Previous Page</button>
+    <button type="button" class="btn btn-primary" @onclick="OnNextClick">Next Page</button>
+</p>
 }
 
 
 @code {
     private List<Post>? posts;
-
+    private int page = 1;
     protected override async Task OnInitializedAsync()
     {       
         await base.OnInitializedAsync();
-        posts = await http.GetFromJsonAsync<List<Post>>("api/Posts");
+        posts = await http.GetFromJsonAsync<List<Post>>($"api/Posts/{page}/10");
     }
 
     protected void OnAddPostClick()
     {
         //Navigate to a detail page
         NavManager.NavigateTo("post");
+    }
+
+    protected async Task OnPreviousClickAsync()
+    {
+        posts = await http.GetFromJsonAsync<List<Post>>($"api/Posts/{--page}/10");
+    }
+
+    protected async Task OnNextClick()
+    {
+        posts = await http.GetFromJsonAsync<List<Post>>($"api/Posts/{++page}/10");
     }
 }
