@@ -31,7 +31,7 @@ namespace HackerSpace.Server.Controllers
 		[HttpPost]
 		public void InsertPost(Post post) 
 		{
-            _postsRepo.InsertPost(post);
+            _postsRepo.AddPost(post);
         }
 		[HttpDelete]
         [Route("{id:int}")]
