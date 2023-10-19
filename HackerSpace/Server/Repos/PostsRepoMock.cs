@@ -1,14 +1,15 @@
-﻿using HackerSpace.Shared.Modles;
+﻿using HackerSpace.Server.Interfaces;
+using HackerSpace.Shared.Modles;
 
 namespace HackerSpace.Server.Repos
 {
-	public class PostsRepoMock
+	public class PostsRepoMock: IPostsRepo
 	{
 		private List<Post> posts;
 		public PostsRepoMock() 
 		{
             posts = new List<Post>();
-            for (int i = 0; i < 105; i++)
+            for (int i = 1; i < 105; i++)
             {
                 posts.Add(new Post
                 {
@@ -28,12 +29,30 @@ namespace HackerSpace.Server.Repos
 		{
 			return posts.Where(p => p.Id == id).FirstOrDefault();
 		}
-		public void InsertPost(Post post)
-		{
-			posts.Add(post);
-		}
 
-		public void DeletePost(int id)
+
+
+        public Post AddPost(Post post)
+        {
+			post.Id = posts.Count +1;
+            posts.Add(post);
+			return post;
+        }
+
+        public void UpdatePost(Post post)
+        {
+            //find current post
+			Post? currentPost = posts.Find(p => p.Id == post.Id);
+
+            //if found update each element
+            if (currentPost != null)
+            {
+                currentPost.Title = post.Title;
+                currentPost.Text = post.Text;
+                currentPost.Date = post.Date;
+            }
+        }
+        public void DeletePost(int id)
 		{
 			Post? post_to_remove = posts.Where(p => p.Id == id).FirstOrDefault();
 			if (post_to_remove!=null)
@@ -41,5 +60,5 @@ namespace HackerSpace.Server.Repos
 				posts.Remove(post_to_remove);
 			}
 		}
-	}
+    }
 }
