@@ -1,8 +1,8 @@
-﻿@page "/post/{Id:int}"
+﻿﻿@page "/post/{Id:int}"
 @inject HttpClient Http
-
 <h3>BlogPostViewerPage</h3>
-@if ( post == null)
+
+@if(post is null)
 {
     <p>Loading...</p>
 }
@@ -12,12 +12,14 @@ else
     <p>@post.Date.ToString("D")</p>
     <p>@post.Text</p>
 }
-<a href="/blog">Back to Main Page</a>
+<a href="/blog">Back to Blog</a>
 
 @code {
+
     [Parameter]
     public int Id { get; set; }
     protected Post? post;
+
     protected async override Task OnParametersSetAsync()
     {
         await base.OnParametersSetAsync();
