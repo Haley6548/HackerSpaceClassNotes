@@ -1,0 +1,79 @@
+﻿@page "/blog"
+@inject HttpClient http;
+@inject NavigationManager NavManager
+
+<h3>Blog</h3>
+
+<p>
+    <button type="button" class="btn btn-primary" @onclick="OnPreviousClickAsync">Previous Page</button>
+    <button type="button" class="btn btn-primary" @onclick="OnNextClick">Next Page</button>
+</p>
+
+@if(posts == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    @foreach(var post in posts)
+    {
+        <p>@post.Date.ToString("D")
+            <a href="post/@post.Id">@post.Title</a>
+            <button type="button" class="btn btn-primary"
+            @onclick="() => OnEditClick(post.Id)">
+                Edit Post
+            </button>
+            <button type="button" class="btn btn-danger"
+            @onclick="() => OnDeleteClickAsync(post.Id)">
+                Delete Post
+            </button>
+        </p>
+    }
+<button type="button" class="btn btn-primary" @onclick="OnAddPostClick" >Add Post</button>
+
+}
+
+
+@code {
+    private List<Post>? posts;
+    private int page = 1;
+    protected override async Task OnInitializedAsync()
+    {       
+        await base.OnInitializedAsync();
+        posts = await http.GetFromJsonAsync<List<Post>>($"api/Posts/{page}/10");
+    }
+
+    protected void OnAddPostClick()
+    {
+        //Navigate to a detail page
+        NavManager.NavigateTo("editpost");
+    }
+    protected async Task OnDeleteClickAsync(int id)
+    {
+        var results = await http.DeleteAsync($"api/Posts/{id}");
+        NavManager.NavigateTo($"/blog", true);// force reload
+    }
+    protected async Task OnEditClick(int id)
+    {
+        NavManager.NavigateTo($"/editpost/{id}", true);// force reload
+    }
+
+    protected async Task OnPreviousClickAsync()
+    {
+        if (page > 1)
+        {
+            posts = await http.GetFromJsonAsync<List<Post>>($"api/Posts/{--page}/10");
+        }
+
+    }
+
+    protected async Task OnNextClick()
+    {        
+        var nextPagePosts = await http.GetFromJsonAsync<List<Post>>($"api/Posts/{page}/10");
+
+        if (nextPagePosts?.Count > 0)
+        {
+            page++;
+        }
+    }
+}

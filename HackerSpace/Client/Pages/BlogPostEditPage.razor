@@ -1,4 +1,5 @@
-﻿@page "/post"
+﻿@page "/editpost/{int:id}"
+@page "/editpost"
 @inject HttpClient http
 @inject NavigationManager NavManager
 
@@ -22,13 +23,45 @@
 
 
 @code {
-    //instantiate a data object from a model class
-    private Post post = new Post();
+    [Parameter]
+    public int? Id { get; set; } = null;
+    private Post? post;
 
-    protected void OnSubmitClicked()
+    protected async override Task OnParametersSetAsync()
     {
-        http.PostAsJsonAsync<Post>("api/Post", post);
+        await base.OnParametersSetAsync();
+        if(Id == null)
+        {
+            post = new Post();
+        }
+        else
+        {
+            post = await http.GetFromJsonAsync<Post>($"api/Posts/{Id}");
+            if(post == null)
+            {
 
+            }
+        }
+    }
+
+    protected async void OnSubmitClicked()
+    {
+        if (post?.Id == 0)// new post
+        {
+            var result = await http.PostAsJsonAsync<Post>("api/Post", post);
+            if (result.IsSuccessStatusCode)
+            {
+                NavManager.NavigateTo("blog");
+            }
+        }
+        else if (post == null)
+        {
+            //add an alert
+        }
+        else
+        {
+            var result = await http.PutAsJsonAsync<Post>("api/Posts", post);
+        }
         NavManager.NavigateTo("blog");
     }
 }

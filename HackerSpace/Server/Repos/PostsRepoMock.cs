@@ -7,38 +7,39 @@ namespace HackerSpace.Server.Repos
 		private List<Post> posts;
 		public PostsRepoMock() 
 		{
-			posts = new List<Post>();
-			posts.Add(new Post
-			{
-				Id = 1,
-				Title = "Test",
-				Text = "Test",
-				Date = DateTime.Now,
-			});
-			posts.Add(new Post
-			{
-				Id = 2,
-				Title = "Test2",
-				Text = "Test2",
-				Date = DateTime.Now,
-			});
-
-			posts.Add(new Post
-			{
-				Id = 3,
-				Title = "Test3",
-				Text = "Test3",
-				Date = DateTime.Now,
-			});
+            posts = new List<Post>();
+            for (int i = 0; i < 105; i++)
+            {
+                posts.Add(new Post
+                {
+                    Id = i,
+                    Title = $"Test {i}",
+                    Text = $"Test {i}",
+                    Date = DateTime.Now,
+                });
+            }       
 		}
 
-		public List<Post> GetAll() 
+		public IEnumerable<Post> GetPosts(int page, int pageSize) 
 		{
-			return posts; 
+			return posts.OrderByDescending(p => p.Date).Skip((page-1)*pageSize).Take(pageSize); 
+		}
+		public Post? GetPost(int id)
+		{
+			return posts.Where(p => p.Id == id).FirstOrDefault();
 		}
 		public void InsertPost(Post post)
 		{
 			posts.Add(post);
+		}
+
+		public void DeletePost(int id)
+		{
+			Post? post_to_remove = posts.Where(p => p.Id == id).FirstOrDefault();
+			if (post_to_remove!=null)
+			{
+				posts.Remove(post_to_remove);
+			}
 		}
 	}
 }

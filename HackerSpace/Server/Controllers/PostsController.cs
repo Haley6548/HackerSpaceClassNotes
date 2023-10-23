@@ -16,15 +16,31 @@ namespace HackerSpace.Server.Controllers
 		}
 
 		[HttpGet]
-		public List<Post> GetAllPosts()
+		[Route("{page:int}/{pageSize:int}")]
+		public IEnumerable<Post> GetAllPosts(int page, int pageSize)
 		{
-			return _postsRepo.GetAll();
+			return _postsRepo.GetPosts(page, pageSize);
 		}
+<<<<<<< HEAD
+		[HttpGet]
+		[Route("{id:int}")]
+		public Post? GetPost(int id)
+		{
+			return _postsRepo.GetPost(id);
+		}
+=======
+>>>>>>> parent of fc5381c (added viewer page)
 
 		[HttpPost]
 		public void InsertPost(Post post) 
 		{
             _postsRepo.InsertPost(post);
         }
+		[HttpDelete]
+        [Route("{id:int}")]
+        public void DeletePost(int id)
+		{
+			_postsRepo.DeletePost(id);
+		}
 	}
 }
