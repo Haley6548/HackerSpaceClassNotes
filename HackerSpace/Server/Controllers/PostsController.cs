@@ -1,4 +1,5 @@
-﻿using HackerSpace.Server.Repos;
+﻿using HackerSpace.Server.Interfaces;
+using HackerSpace.Server.Repos;
 using HackerSpace.Shared.Modles;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -9,8 +10,8 @@ namespace HackerSpace.Server.Controllers
 	[ApiController]
 	public class PostsController : ControllerBase
 	{
-		private readonly PostsRepoMock _postsRepo;
-		public PostsController(PostsRepoMock postsRepo)
+		private readonly IPostsRepo _postsRepo;
+		public PostsController(IPostsRepo postsRepo)
 		{
 			_postsRepo = postsRepo;
 		}
@@ -21,21 +22,24 @@ namespace HackerSpace.Server.Controllers
 		{
 			return _postsRepo.GetPosts(page, pageSize);
 		}
-<<<<<<< HEAD
 		[HttpGet]
 		[Route("{id:int}")]
 		public Post? GetPost(int id)
 		{
 			return _postsRepo.GetPost(id);
 		}
-=======
->>>>>>> parent of fc5381c (added viewer page)
 
 		[HttpPost]
-		public void InsertPost(Post post) 
+		public void PostPost(Post post) 
 		{
-            _postsRepo.InsertPost(post);
+            _postsRepo.AddPost(post);
         }
+		[HttpPut]
+		public void PutPost(Post post)
+		{
+			_postsRepo.UpdatePost(post);
+		}
+
 		[HttpDelete]
         [Route("{id:int}")]
         public void DeletePost(int id)

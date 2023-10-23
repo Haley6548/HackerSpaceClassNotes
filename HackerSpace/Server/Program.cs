@@ -1,3 +1,4 @@
+using HackerSpace.Server.Interfaces;
 using HackerSpace.Server.Repos;
 using Microsoft.AspNetCore.ResponseCompression;
 
@@ -15,7 +16,7 @@ namespace HackerSpace
             builder.Services.AddRazorPages();
 
             // Inject data objects
-            builder.Services.AddSingleton<PostsRepoMock>();
+            builder.Services.AddSingleton<IPostsRepo ,PostsRepoMock>();
 
             var app = builder.Build();
 
